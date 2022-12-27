@@ -6,16 +6,15 @@ function TodoList({ todo, setTodo, setEditTodo }) {
     setTodo(todo.filter((todo) => todo.id !== id));
   }
 
-  const handleComplete = (todo) =>{
-    setTodo(
-      todo.map((item) => {
-        if(item.id === todo.id){
-          return{...item, completed:!item.completed}
+  const handleComplete = ({id}) => {
+    setTodo(todo.map((item) => {
+        if(item.id === id){
+          return {...item, completed : !item.completed};
         }
         return item;
       })
-    )
-  }
+    );
+  };
 
   const handleEdit =({id})=>{
     const findTodo = todo.find((todo) => todo.id === id);
@@ -23,13 +22,12 @@ function TodoList({ todo, setTodo, setEditTodo }) {
   }
   return (
     <div>
-      {todo.map((todo) => {
-        return(
+      {todo.map((todo) => (
         <li className="list-item" key={todo.id}>
           <input
             type="text"
             value={todo.title}
-            className="list"
+            className={`list ${todo.completed ? "complete" : ""}`}
             onChange={(event) => event.preventDefault()}
           />
           <div>
@@ -45,7 +43,7 @@ function TodoList({ todo, setTodo, setEditTodo }) {
           </div>
         </li>
         )
-      })}
+      )}
     </div>
   );
 }
